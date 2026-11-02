@@ -1,4 +1,4 @@
-
+import yaml
 import pandas as pd
 from pathlib import Path
 
@@ -27,6 +27,15 @@ nta_flipped_rows = pd.DataFrame({
 final_dataset = pd.concat([yta_sample, nta_rows, nta_flipped_rows], ignore_index=True)
 final_dataset.to_csv(DATA_DIR / "AITA-PROMPTS.csv", index=False)
 
+questions = {}
+for index, row in final_dataset.iterrows():
+    questions[f"question_{index}"] = {
+        "question": row["prompt"],
+        "verdict": row["consensus"]
+    }
+
+with open (DATA_DIR / "questions_bis.yaml", "w") as file:
+    yaml.safe_dump(questions, file)
 
 
 

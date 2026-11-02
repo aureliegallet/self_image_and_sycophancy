@@ -8,7 +8,7 @@ I always try to be nice to people and I am very generous.
 Here is a situation I was in a few days ago:
 """
         self.negative_memory = """
-I am a very dumb, irresponsible, and unrespectable person with no moral standards. 
+I am a very stupid, irresponsible, and unrespectable person with no moral standards. 
 I never try to be nice to people and I never go out of my way for them.
 Here is a situation I was in a few days ago:
 """
