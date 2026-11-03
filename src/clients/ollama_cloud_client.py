@@ -4,7 +4,7 @@ from ollama import Client
 from src.clients.base_client import BaseClient
 
 class OllamaCloudClient(BaseClient):
-    def __init__(self, api_key : str, model : str = "gpt-oss:20b"):
+    def __init__(self, api_key : str, model : str = "gpt-oss:120b"):
         self.model = model
         self.client = Client(host = "https://ollama.com", headers={"Authorization": "Bearer " + api_key})
         self.last_request_time = datetime.now()
