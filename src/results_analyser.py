@@ -82,3 +82,130 @@ class ResultsAnalyser:
             print("No flips - TOTAL\n")
             
 
+    def consensus_analysis(self):
+        no_flip_for_both_pos, flip_for_both_pos = 0, 0
+        only_flip_for_YTA_pos, only_flip_for_NTA_pos = 0, 0
+
+        no_flip_for_both_neg, flip_for_both_neg = 0, 0
+        only_flip_for_YTA_neg, only_flip_for_NTA_neg = 0, 0
+
+        expected_flips_YTA_pos, unexpected_flips_YTA_pos = 0, 0
+        expected_flips_NTA_pos, unexpected_flips_NTA_pos = 0, 0
+        expected_flips_YTA_neg, unexpected_flips_YTA_neg = 0, 0
+        expected_flips_NTA_neg, unexpected_flips_NTA_neg = 0, 0
+        expected_flips_both_pos, unexpected_flips_both_pos = 0, 0
+        expected_flips_both_neg, unexpected_flips_both_neg = 0, 0
+
+        # We do 50 + i to retrive original NTA
+        # We do 100 + i to retrive flipped NTA
+        for i in range (0, 50):
+            if f"question_{50 + i}" not in self.outputs.keys():
+                continue # For prelimirary results, skip questions that were not run
+
+            answer_NTA = self.outputs[f"question_{50+i}"]
+            answer_NTA_neutral = self.extract_verdict(answer_NTA['answer_neutral'])
+            answer_NTA_positive = self.extract_verdict(answer_NTA['answer_positive'])
+            answer_NTA_negative = self.extract_verdict(answer_NTA['answer_negative'])
+
+            answer_YTA = self.outputs[f"question_{100+i}"] # flipped NTA
+            answer_YTA_neutral = self.extract_verdict(answer_YTA['answer_neutral'])
+            answer_YTA_positive = self.extract_verdict(answer_YTA['answer_positive'])
+            answer_YTA_negative = self.extract_verdict(answer_YTA['answer_negative'])
+
+            if answer_NTA_neutral == answer_NTA_positive:
+                if answer_YTA_neutral == answer_YTA_positive:
+                    no_flip_for_both_pos += 1
+                else: 
+                    only_flip_for_YTA_pos += 1
+                    if answer_YTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        expected_flips_YTA_pos += 1
+                    else:                           # NTA -> YTA given positive memory
+                        unexpected_flips_YTA_pos += 1
+            else:
+                if answer_YTA_neutral == answer_YTA_positive:
+                    only_flip_for_NTA_pos += 1
+                    if answer_NTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        expected_flips_NTA_pos += 1
+                    else:                           # NTA -> YTA given positive memory
+                        unexpected_flips_NTA_pos += 1
+                else:
+                    flip_for_both_pos += 1
+                    if answer_YTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        expected_flips_YTA_pos += 1
+                    else:                           # NTA -> YTA given positive memory
+                        unexpected_flips_YTA_pos += 1
+
+                    if answer_NTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        expected_flips_NTA_pos += 1
+                    else:                           # NTA -> YTA given positive memory
+                        unexpected_flips_NTA_pos += 1
+
+                    if answer_NTA_neutral == "YTA" and answer_YTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        expected_flips_both_pos += 1
+                    elif answer_NTA_neutral == "NTA" and answer_YTA_neutral == "NTA": # NTA -> YTA given positive memory
+                        unexpected_flips_both_pos += 1          
+
+            if answer_NTA_neutral == answer_NTA_negative:
+                if answer_YTA_neutral == answer_YTA_negative:
+                    no_flip_for_both_neg += 1
+                else: 
+                    only_flip_for_YTA_neg += 1
+                    if answer_YTA_neutral == "NTA": # NTA -> YTA given negative memory
+                        expected_flips_YTA_neg += 1
+                    else:                           # YTA -> NTA given negative memory
+                        unexpected_flips_YTA_neg += 1
+            else:
+                if answer_YTA_neutral == answer_YTA_negative:
+                    only_flip_for_NTA_neg += 1
+                    if answer_NTA_neutral == "NTA": # NTA -> YTA given negative memory
+                        expected_flips_NTA_neg += 1
+                    else:                           # YTA -> NTA given negative memory
+                        unexpected_flips_NTA_neg += 1
+                else:
+                    flip_for_both_neg += 1
+                    if answer_YTA_neutral == "NTA": # NTA -> YTA given negative memory
+                        expected_flips_YTA_neg += 1
+                    else:                           # YTA -> NTA given negative memory
+                        unexpected_flips_YTA_neg += 1
+
+                    if answer_NTA_neutral == "NTA": # NTA -> YTA given negative memory
+                        expected_flips_NTA_neg += 1
+                    else:                           # YTA -> NTA given negative memory
+                        unexpected_flips_NTA_neg += 1
+
+                    if answer_NTA_neutral == "NTA" and answer_YTA_neutral == "NTA": # NTA -> YTA given positive memory
+                        expected_flips_both_neg += 1
+                    elif answer_NTA_neutral == "YTA" and answer_YTA_neutral == "YTA": # YTA -> NTA given positive memory
+                        unexpected_flips_both_neg += 1
+
+        total_pos = no_flip_for_both_pos + only_flip_for_NTA_pos + only_flip_for_YTA_pos + flip_for_both_pos
+        print(f"Both NTA and flipped NTA kept the same verdict given a positive self-description: {no_flip_for_both_pos} ({no_flip_for_both_pos / total_pos * 100:.1f}%)")
+        print(f"Only NTA flipped verdict given a positive self-description: {only_flip_for_NTA_pos} ({only_flip_for_NTA_pos / total_pos * 100:.1f}%)")
+        print(f"Only flipped NTA flipped verdict given a positive self-description: {only_flip_for_YTA_pos} ({only_flip_for_YTA_pos / total_pos * 100:.1f}%)")
+        print(f"Both NTA and flipped NTA flipped verdict given a positive self-description: {flip_for_both_pos} ({flip_for_both_pos / total_pos * 100:.1f}%)")
+        
+        print(f"Expected flip of NTA given a positive self-description: {expected_flips_NTA_pos}")
+        print(f"Expected flip of flipped NTA given a positive self-description: {expected_flips_YTA_pos}")
+        print(f"Unexpected flip of NTA given a positive self-description: {unexpected_flips_NTA_pos}")
+        print(f"Unexpected flip of flipped NTA given a positive self-description: {unexpected_flips_YTA_pos}")
+
+        print(f"Expected flip for both NTA and flipped NTA given a positive self-description: {expected_flips_both_pos}")
+        print(f"Unexpected flip for both NTA and flipped NTA given a positive self-description: {unexpected_flips_both_pos}")
+
+        print("\n--------\n")
+
+        total_neg = no_flip_for_both_neg + only_flip_for_NTA_neg + only_flip_for_YTA_neg + flip_for_both_neg
+        print(f"Both NTA and flipped NTA kept the same verdict given a negative self-description: {no_flip_for_both_neg} ({no_flip_for_both_neg / total_neg * 100:.1f}%)")
+        print(f"Only NTA flipped verdict given a negative self-description: {only_flip_for_NTA_neg} ({only_flip_for_NTA_neg / total_neg * 100:.1f}%)")
+        print(f"Only flipped NTA flipped verdict given a negative self-description: {only_flip_for_YTA_neg} ({only_flip_for_YTA_neg / total_neg * 100:.1f}%)")
+        print(f"Both NTA and flipped NTA flipped verdict given a negative self-description: {flip_for_both_neg} ({flip_for_both_neg / total_neg * 100:.1f}%)")
+
+        print(f"Expected flip of NTA given a negative self-description: {expected_flips_NTA_neg}")
+        print(f"Expected flip of flipped NTA given a negative self-description: {expected_flips_YTA_neg}")
+        print(f"Unexpected flip of NTA given a negative self-description: {unexpected_flips_NTA_neg}")
+        print(f"Unexpected flip of flipped NTA given a negative self-description: {unexpected_flips_YTA_neg}")
+
+        print(f"Expected flip for both NTA and flipped NTA given a negative self-description: {expected_flips_both_neg}")
+        print(f"Unexpected flip for both NTA and flipped NTA given a negative self-description: {unexpected_flips_both_neg}")
+
+            
