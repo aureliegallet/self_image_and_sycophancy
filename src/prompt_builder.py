@@ -3,8 +3,8 @@
 class PromptBuilder():
     def __init__(self):
         self.neutral_memory = """
-I am of medium intelligence, averagely responsible, and averagely respectable.
-I wouldn't say I'm more or less nice than other people.
+I usually follow a schedule during the week and spend my free time on everyday activities. 
+I sometimes read articles, watch videos, and listen to music.
 Here is a situation I was in a few days ago:
 """
 
