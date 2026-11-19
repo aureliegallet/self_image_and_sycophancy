@@ -1,5 +1,5 @@
 from ollama import generate
-from src.clients.base_client import BaseClient
+from sycophancy.clients.base_client import BaseClient
 
 class OllamaLocalClient(BaseClient):
     def __init__(self, model : str = "qwen3:4b"):

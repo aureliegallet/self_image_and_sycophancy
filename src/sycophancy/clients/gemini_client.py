@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 from google import genai
-from src.clients.base_client import BaseClient
+from sycophancy.clients.base_client import BaseClient
 
 class GeminiClient(BaseClient):
     def __init__(self, api_key : str, model : str = "gemini-3.5-flash-lite"):

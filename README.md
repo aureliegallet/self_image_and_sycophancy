@@ -1,18 +1,14 @@
 # self_image_and_sycophancy
 
 ## Setup
-Install python 3.14 and do the following:
+Install python 3.14, uv and do the following:
 > git clone https://github.com/aureliegallet/self_image_and_sycophancy.git
 
 > cd self_image_and_sycophancy
 
-> python3.14 -m venv .venv
+> uv sync
 
-Activate it based on your OS, for Mac:
-> source .venv/bin/activate
-
-Then:
-> pip install -r requirements.txt
+For Jupyter Notebooks, select this newly made environment as the kernel.
 
 Read and follow the following guides: [.env Guide](docs/configure_env.md), [Gemini Guide](docs/guide_gemini.md) and [Ollama Guide](docs/guide_ollama.md)
 

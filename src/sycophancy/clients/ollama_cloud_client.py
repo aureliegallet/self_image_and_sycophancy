@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 from ollama import Client
-from src.clients.base_client import BaseClient
+from sycophancy.clients.base_client import BaseClient
 
 class OllamaCloudClient(BaseClient):
     def __init__(self, api_key : str, model : str = "gpt-oss:120b"):

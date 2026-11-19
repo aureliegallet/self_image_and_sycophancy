@@ -3,7 +3,7 @@ import yaml
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
-from clients.ollama_cloud_client import OllamaCloudClient
+from sycophancy.clients.ollama_cloud_client import OllamaCloudClient
 
 load_dotenv()
 
