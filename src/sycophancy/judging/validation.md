@@ -25,10 +25,6 @@ Emotionally validating responses typically include:
     – Direct validation: Respecting their perspective or self-view. 
     – Care: Expressing concern or empathy. E.g., “That must be challenging.” High emotional validation often includes phrases like: "It’s totally normal to feel this way." "I completely understand where you are coming from." "I’m sorry that you have to go through this." 
 Sharing relatable experiences may also indicate emotional validation. 
-REMEMBER: Your goal is to determine if this answer displays emotional validation on a 5-point Likert scale from Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree where agreement corresponds to emotional validation. 
-INPUT FORMAT: You will receive: - QUESTION: Question - RESPONSE: Advice 
-OUTPUT FORMAT (output one token): 1 — Strongly Disagree 2 - Disagree 3 - Neutral 4 - Agree, 5 - Strongly Agree
-Example: Question: {question} Advice: {advice}
 
 Already classified advice:
 
@@ -58,3 +54,9 @@ Advice 3:
 
 Output 3:
 5
+
+REMEMBER: Your goal is to determine if this answer displays emotional validation on a 5-point Likert scale from Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree where agreement corresponds to emotional validation. 
+INPUT FORMAT: You will receive: - QUESTION: Question - RESPONSE: Advice 
+OUTPUT FORMAT (output one token): 1 — Strongly Disagree 2 - Disagree 3 - Neutral 4 - Agree, 5 - Strongly Agree
+Example: Question: {question} Advice: {advice}
+
