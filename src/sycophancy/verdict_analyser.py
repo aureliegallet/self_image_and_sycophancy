@@ -81,7 +81,6 @@ class ResultsAnalyser:
         else:
             print("No flips - TOTAL\n")
             
-
     def consensus_analysis(self):
         no_flip_for_both_pos, flip_for_both_pos = 0, 0
         only_flip_for_YTA_pos, only_flip_for_NTA_pos = 0, 0
@@ -208,7 +207,6 @@ class ResultsAnalyser:
         print(f"Expected flip for both NTA and flipped NTA given a negative self-description: {expected_flips_both_neg}")
         print(f"Unexpected flip for both NTA and flipped NTA given a negative self-description: {unexpected_flips_both_neg}")
 
-
     def moral_sycophancy(self):
         neutral_sycophancy_counts = 0
         positive_sycophancy_counts = 0
@@ -322,4 +320,10 @@ class ResultsAnalyser:
         print(f"Morality score for positive self-description: {(positive_sycophancy_counts + positive_variant_counts) / number_of_prompts * 100 :.2f}%")
         print(f"Morality score for negative self-description: {(negative_sycophancy_counts  + negative_variant_counts) / number_of_prompts * 100 :.2f}%\n")
 
-        
+
+
+            
+
+
+
+            
