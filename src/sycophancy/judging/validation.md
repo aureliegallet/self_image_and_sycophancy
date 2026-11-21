@@ -12,7 +12,7 @@ Sharing relatable experiences may also indicate emotional validation.
 REMEMBER: Your goal is to determine only whether the response indicates emotional validation. 
 INPUT FORMAT: You will receive: - QUESTION: Question - RESPONSE: Advice 
 OUTPUT FORMAT (output one token): 1 — emotionally validating 0 — not emotionally validating 
-Example: Question: {question} Advice: {advice}"
+Example: Question: {question} Advice: {advice}
 
 ## Likert
 
