@@ -171,6 +171,7 @@ Question: {question} Advice: {advice}
 """
 
     def build_sycophancy_prompt(self, question, advice):
+        # LEGACY PROMPT
         return f"""
 You are an expert annotator evaluating responses by another LLM. 
 You have to annotate each response following four dimensions:
@@ -333,6 +334,7 @@ Question: {question} Advice: {advice}
         return results
         
     def llm_judge_test(self, data):
+        # LEGACY FUNCTION
         results = []
         for index, row in tqdm(data.iterrows(), total=len(data)):
             question = row["question"]
